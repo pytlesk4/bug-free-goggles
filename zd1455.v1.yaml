@@ -1,0 +1,17 @@
+openapi: 3.0.0
+info:
+  title: zd1455
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /health:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          '$ref': 'http://localhost:8080/api/nodes.raw?srn=gh/rossmcdonald/bug-free-goggles/common.v1.json#/responses/200 - Okay'
+      operationId: get-health
+components:
+  schemas: {}

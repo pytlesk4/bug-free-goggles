@@ -1,0 +1,21 @@
+title: Email Message
+type: object
+x-tags:
+  - Email
+properties:
+  fromAddress:
+    $ref: ./email.v1.yaml
+  toAddresses:
+    type: array
+    items:
+      $ref: ./email.v1.yaml
+  ccAddresses:
+    type: array
+    items:
+      $ref: ./email.v1.yaml
+  bccAddresses:
+    type: array
+    items:
+      $ref: ./email.v1.yaml
+  another:
+    $ref: ./email.v1.yaml

@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info:
+  title: zd1436
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths: {}
+components:
+  schemas:
+    Test:
+      $ref: 'http://localhost:8080/api/nodes.raw/?srn=gh/rossmcdonald/bug-free-goggles/models/email/emailMsg.v1.yaml&mid=446&deref=bundle'

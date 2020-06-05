@@ -1,0 +1,27 @@
+title: Asset
+type: object
+description: |-
+  An object represting an API asset.
+
+  > This object is an asset. Use it wisely. Handle it with care. The end.
+x-tags:
+  - Asset
+properties:
+  id:
+    type: integer
+    description: Asset ID
+  updated_at:
+    type: string
+    format: date-time
+  created_at:
+    type: string
+    format: date-time
+  metadata:
+    $ref: ../reference/common/models/metadata.v1.yaml
+  name:
+    type: string
+required:
+  - id
+  - updated_at
+  - created_at
+  - name

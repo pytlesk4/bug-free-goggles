@@ -1,0 +1,14 @@
+title: Asset Manager Object
+type: object
+description: Test for masking the same design library element multiple times.
+properties:
+  current:
+    $ref: 'http://localhost:8080/api/nodes.raw/?srn=gh/rossmcdonald/bug-free-goggles/models/asset.v1.yaml&mid=7&deref=bundle'
+  store:
+    type: array
+    items:
+      $ref: 'http://localhost:8080/api/nodes.raw/?srn=gh/rossmcdonald/bug-free-goggles/models/asset.v1.yaml&mid=4&deref=bundle'
+  previous_store:
+    type: array
+    items:
+      $ref: 'http://localhost:8080/api/nodes.raw/?srn=gh/rossmcdonald/bug-free-goggles/models/asset.v1.yaml&mid=6&deref=bundle'

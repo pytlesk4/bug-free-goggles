@@ -1,0 +1,1112 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.1",
+        "title": "mySE Utility API",
+        "description": "The aim of Utility API is to provide common information usable in other APIs for a given user or a given account in a given business unit (mySE country). \nThe API has two features (for now): customers and paymentTerms.\n- Get list of customerId is the method that retrieves a complete list of customer Id corresponding to a given purchaserId for a particular BusinessUnit (country)\n- Get list of payment terms is the method that gives all possible payment terms in a given businessUnit.\n\nA user can have access to multiple accounts in mySE:\n- His home account\n- Other accounts linked to the home account (through chain ID relationship in mySE)\n- Accounts accessible through Temporary Account Access\n\nThe API insures getting information for all these accounts (including order Management rights on different accounts).",
+        "contact": {
+            "name": "Loic Guibart",
+            "email": "Loic.Guibart@edifixio.com",
+            "url": "http://se.com"
+        }
+    },
+    "basePath": "/v1/customer-order/utility",
+    "tags": [
+        {
+            "name": "Utility Service"
+        }
+    ],
+    "paths": {
+        "/payment-terms/{business-unit}": {
+            "get": {
+                "tags": [
+                    "Utility Service"
+                ],
+                "summary": "Get list of payment terms",
+                "description": "This API method returns the complete list of payments terms available for a given BusinessUnit (country). PaymentTerms can be used as a search criterion in the Invoice search API method Parameters.\n\n### #1. Technical error code for http return code 400\n\nMissing mandatory parameter or invalid parameter value\n\n<table cellspacing=\"0\" border=\"0\">\n\t<colgroup width=\"158\"></colgroup>\n\t<colgroup width=\"250\"></colgroup>\n\t<colgroup width=\"520\"></colgroup>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorCode</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorMessage</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">Comment</font></b></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Empty_Authorization</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Authorization token is not filled</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">No value provided in the mandatory X-IDMS-Authorization header parameter.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Empty_BusinessUnit</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Business Unit is not Filled</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">No value provided in the mandatory businessUnit path parameter.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_BusinessUnit</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Business Unit code does not exist in MySE</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">The requested Business Unit value does not exist in MySE.</font></td>\n\t</tr>\n\t<tr>\n    <td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_Language</font></td>\n    <td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid language</font></td>\n    <td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Language does not exist for the given Business unit</font></td>\n  </tr>\n</table>\n\n### #2. Technical error code for http return code 403\n\nInvalid authentication token or user not registered in mySE\n\n<table cellspacing=\"0\" border=\"0\">\n\t<colgroup width=\"158\"></colgroup>\n\t<colgroup width=\"250\"></colgroup>\n\t<colgroup width=\"520\"></colgroup>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorCode</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorMessage</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">Comment</font></b></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_Authorization</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid authorization token</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Wrong token or invalid session on IDMS.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Expired_Authorization</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Expired authorization token</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">The authorization token validity has expired, it must be renewed by the calling application</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_User</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">User with federateID XXX not found for Business unit YYY</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">User not recognized on MySE for the given Business Unit. FederatedID is the unique identifier for the user in MySE database (UIMS and IDMS identifier)</font></td>\n\t</tr>\n</table>\n\n### #3. Technical error code for http return code 500\n\nService unavailable or Unexpected error\n\n<table cellspacing=\"0\" border=\"0\">\n\t<colgroup width=\"158\"></colgroup>\n\t<colgroup width=\"250\"></colgroup>\n\t<colgroup width=\"520\"></colgroup>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorCode</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorMessage</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">comment</font></b></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Service_Unavailable</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Unable to connect to MySE</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Connection to MySE rejected or timeout.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">NOK</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">An error has occured at &lt;date&gt;</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Any other error or exception found. All technical errors are managed within this specific code.</font></td>\n\t</tr>\n</table>",
+                "operationId": "getPaymentTermsList",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "languageCode",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Language code to use for translation of user information item labels returned by the API. This is a 2-digits ISO code.\nIf not set, the service will use the default language\nconfigured for each mySE site.\nExample: \n* languageCode=fr"
+                    },
+                    {
+                        "name": "countryCode",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Country code to use for translation of user information item labels returned by the API, in addition to the language code. This is a 2-digits ISO code.\nIf not set, the API will use the default country code for the requested language code.\nIf neither the language code nor the country code are set, the API will use the default language configured for each mySE site.\nExample: \n* countryCode=FR"
+                    },
+                    {
+                        "name": "X-IDMS-Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "description": "Authorization token for user identification in IDMS.\n\nExample:\nFor an IDMS OAuth token\n* X-IDMS-Authorization: 00D11000000Doh7!AR8AQI6cigc8axgaooyUti5MxTW4jOR_f5yO8ihmUo8RcM6aIwibBPv6yZ5trZBSXHPQq3nesns5l6.splDzUWttm8wteHpP",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "object",
+                            "xml": {
+                                "name": "PaymentTermsListData"
+                            },
+                            "description": "The list that contains all possible payment terms for a businessUnit\n",
+                            "properties": {
+                                "paymentTermsList": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "description": "PaymentTermsItem information",
+                                        "properties": {
+                                            "code": {
+                                                "type": "string",
+                                                "description": "Value of the status (its code).",
+                                                "example": "Z001"
+                                            },
+                                            "label": {
+                                                "type": "string",
+                                                "description": "Label  of the payment term (translated token)",
+                                                "example": "Importation - Cash"
+                                            }
+                                        },
+                                        "required": [
+                                            "code",
+                                            "label"
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "examples": {}
+                    },
+                    "400": {
+                        "description": "Request is invalid and cannot be processed due one or more issues such as syntax errors, missing required fields, out of range values, conflicting query parameters, or unknown URI.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "The client is not authorized to perform this request because its identity has not yet been established, or the token is invalid or has expired.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "403": {
+                        "description": "The client does not have permission to perform the requested action e.g. POST or DELETE.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist on the server. It is assumed that the URI is valid for this type of resource.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "429": {
+                        "description": "Number of requests has exceeded the client's rate limits.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Requested operation encountered an unexpected server error.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "business-unit",
+                    "in": "path",
+                    "type": "string",
+                    "required": true,
+                    "description": "MySE Business Unit: MySE identifier on which the request has to be done.\n\nCould be the actual MySE business unit name or the corresponding ACL name (e.g. MySEUS / myseMySEUS).\n\nExamples\n* MySEFR2\n* myseMySEGB\n* ITB"
+                },
+                {
+                    "name": "X-IDMS-Authorization",
+                    "in": "header",
+                    "type": "string",
+                    "description": "Authorization token for user identification in IDMS.\n\nExample:\nFor an IDMS OAuth token\n* X-IDMS-Authorization: 00D11000000Doh7!AR8AQI6cigc8axgaooyUti5MxTW4jOR_f5yO8ihmUo8RcM6aIwibBPv6yZ5trZBSXHPQq3nesns5l6.splDzUWttm8wteHpP",
+                    "required": true
+                }
+            ]
+        },
+        "/customer-ids/{business-unit}/{purchaser-id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "object",
+                            "description": "The list of customer IDs & customer names for a single purchaser",
+                            "properties": {
+                                "purchaserId": {
+                                    "type": "string",
+                                    "description": "Identifier of the purchaser account"
+                                },
+                                "customerIdList": {
+                                    "type": "array",
+                                    "description": "The list of customer IDs & customer names for a single purchaser",
+                                    "items": {
+                                        "type": "object",
+                                        "description": "Customer ID & name",
+                                        "properties": {
+                                            "customerId": {
+                                                "type": "string",
+                                                "description": "Identifier of the customer"
+                                            },
+                                            "customerName": {
+                                                "type": "string",
+                                                "description": "Name of the customer"
+                                            }
+                                        },
+                                        "required": [
+                                            "customerId",
+                                            "customerName"
+                                        ]
+                                    }
+                                }
+                            },
+                            "required": [
+                                "purchaserId"
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Request is invalid and cannot be processed due one or more issues such as syntax errors, missing required fields, out of range values, conflicting query parameters, or unknown URI.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "The client is not authorized to perform this request because its identity has not yet been established, or the token is invalid or has expired.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "403": {
+                        "description": "The client does not have permission to perform the requested action e.g. POST or DELETE.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist on the server. It is assumed that the URI is valid for this type of resource.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "429": {
+                        "description": "Number of requests has exceeded the client's rate limits.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Requested operation encountered an unexpected server error.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    }
+                },
+                "operationId": "get-customer-id-list-for-purchaser",
+                "tags": [
+                    "Utility Service"
+                ],
+                "summary": "Get list of customer Ids for a specific purchaser",
+                "parameters": [
+                    {
+                        "name": "X-IDMS-Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "description": "Authorization token for user identification in IDMS.\n\nExample:\nFor an IDMS OAuth token\n* X-IDMS-Authorization: 00D11000000Doh7!AR8AQI6cigc8axgaooyUti5MxTW4jOR_f5yO8ihmUo8RcM6aIwibBPv6yZ5trZBSXHPQq3nesns5l6.splDzUWttm8wteHpP",
+                        "required": true
+                    }
+                ],
+                "description": "This API method returns the list of customer IDs & customer names that are linked to the requested purchaser ID.\n\n### #1. Technical error code for http return code 400\n\nMissing mandatory parameter or invalid parameter value\n\n<table cellspacing=\"0\" border=\"0\">\n\t<colgroup width=\"158\"></colgroup>\n\t<colgroup width=\"250\"></colgroup>\n\t<colgroup width=\"520\"></colgroup>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorCode</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorMessage</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">Comment</font></b></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Empty_Authorization</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Authorization token is not filled</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">No value provided in the mandatory X-IDMS-Authorization header parameter.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Empty_BusinessUnit</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Business Unit is not Filled</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">No value provided in the mandatory businessUnit path parameter.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_BusinessUnit</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Business Unit code does not exist in MySE</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">The requested Business Unit value does not exist in MySE.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" height=\"17\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Empty_PurchaserId</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Purchaser ID is not filled</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">No value provided in the mandatory purchaserId path parameter.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" height=\"17\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_PurchaserId</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Purchaser ID does not exist</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">The provided purchaser ID does not exist in mySE for the requested Business Unit.</font></td>\n\t</tr>\n\t<tr>\n    <td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_Language</font></td>\n    <td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid language</font></td>\n    <td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Language does not exist for the given Business unit</font></td>\n  </tr>\n</table>\n\n### #2. Technical error code for http return code 403\n\nInvalid authentication token or user not registered in mySE\n\n<table cellspacing=\"0\" border=\"0\">\n\t<colgroup width=\"158\"></colgroup>\n\t<colgroup width=\"250\"></colgroup>\n\t<colgroup width=\"520\"></colgroup>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorCode</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorMessage</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">Comment</font></b></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_Authorization</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid authorization token</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Wrong token or invalid session on IDMS.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Expired_Authorization</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Expired authorization token</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">The authorization token validity has expired, it must be renewed by the calling application</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_User</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">User with federateID XXX not found for Business unit YYY</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">User not recognized on MySE for the given Business Unit. FederatedID is the unique identifier for the user in MySE database (UIMS and IDMS identifier)</font></td>\n\t</tr>\n</table>\n\n### #3. Technical error code for http return code 500\n\nService unavailable or Unexpected error\n\n<table cellspacing=\"0\" border=\"0\">\n\t<colgroup width=\"158\"></colgroup>\n\t<colgroup width=\"250\"></colgroup>\n\t<colgroup width=\"520\"></colgroup>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorCode</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorMessage</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">comment</font></b></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Service_Unavailable</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Unable to connect to MySE</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Connection to MySE rejected or timeout.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">NOK</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">An error has occured at &lt;date&gt;</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Any other error or exception found. All technical errors are managed within this specific code.</font></td>\n\t</tr>\n</table>",
+                "produces": [
+                    "application/json"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "business-unit",
+                    "in": "path",
+                    "type": "string",
+                    "required": true,
+                    "description": "MySE Business Unit: MySE identifier on which the request has to be done.\n\nCould be the actual MySE business unit name or the corresponding ACL name (e.g. MySEUS / myseMySEUS).\n\nExamples\n* MySEFR2\n* myseMySEGB\n* ITB"
+                },
+                {
+                    "name": "X-IDMS-Authorization",
+                    "in": "header",
+                    "type": "string",
+                    "description": "Authorization token for user identification in IDMS.\n\nExample:\nFor an IDMS OAuth token\n* X-IDMS-Authorization: 00D11000000Doh7!AR8AQI6cigc8axgaooyUti5MxTW4jOR_f5yO8ihmUo8RcM6aIwibBPv6yZ5trZBSXHPQq3nesns5l6.splDzUWttm8wteHpP",
+                    "required": true
+                },
+                {
+                    "in": "path",
+                    "name": "purchaser-id",
+                    "type": "string",
+                    "required": true
+                }
+            ]
+        },
+        "/customer-ids/{business-unit}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "customerIdByPurchaserList": {
+                                    "type": "array",
+                                    "description": "The list of customer IDs & customer names for all purchasers",
+                                    "items": {
+                                        "type": "object",
+                                        "description": "The list of customer IDs & customer names for a single purchaser",
+                                        "properties": {
+                                            "purchaserId": {
+                                                "type": "string",
+                                                "description": "Identifier of the purchaser account"
+                                            },
+                                            "customerIdList": {
+                                                "type": "array",
+                                                "description": "The list of customer IDs & customer names for a single purchaser",
+                                                "items": {
+                                                    "type": "object",
+                                                    "description": "Customer ID & name",
+                                                    "properties": {
+                                                        "customerId": {
+                                                            "type": "string",
+                                                            "description": "Identifier of the customer"
+                                                        },
+                                                        "customerName": {
+                                                            "type": "string",
+                                                            "description": "Name of the customer"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "customerId",
+                                                        "customerName"
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        "required": [
+                                            "purchaserId"
+                                        ]
+                                    }
+                                }
+                            },
+                            "description": "The list of customer IDs & customer names for all purchasers"
+                        }
+                    },
+                    "400": {
+                        "description": "Request is invalid and cannot be processed due one or more issues such as syntax errors, missing required fields, out of range values, conflicting query parameters, or unknown URI.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "The client is not authorized to perform this request because its identity has not yet been established, or the token is invalid or has expired.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "403": {
+                        "description": "The client does not have permission to perform the requested action e.g. POST or DELETE.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist on the server. It is assumed that the URI is valid for this type of resource.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "429": {
+                        "description": "Number of requests has exceeded the client's rate limits.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Requested operation encountered an unexpected server error.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Error Response",
+                            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+                            "properties": {
+                                "code": {
+                                    "type": "string",
+                                    "example": "MISSING_FIELD or 12345",
+                                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                                },
+                                "userMessage": {
+                                    "type": "string",
+                                    "example": "Required field is missing: productSku",
+                                    "description": "Human-readable description of the error with hints about how to fix it."
+                                },
+                                "developerMessage": {
+                                    "type": "string",
+                                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                                    "example": "Product master API ParseException: required tag <sku> expected"
+                                },
+                                "moreInfo": {
+                                    "type": "string",
+                                    "description": "Optional link to error documentation, which has more information about the error.",
+                                    "format": "uri",
+                                    "example": "https://example.com/product-master/v1/error/12345"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "userMessage"
+                            ]
+                        }
+                    }
+                },
+                "summary": "Get list of customer Ids for all purchasers",
+                "operationId": "get-customer-id-list",
+                "description": "This API method returns the complete list of customer IDs & customer names for all purchaser IDs that the user has access to.\n\n### #1. Technical error code for http return code 400\n\nMissing mandatory parameter or invalid parameter value\n\n<table cellspacing=\"0\" border=\"0\">\n\t<colgroup width=\"158\"></colgroup>\n\t<colgroup width=\"250\"></colgroup>\n\t<colgroup width=\"520\"></colgroup>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorCode</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorMessage</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">Comment</font></b></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Empty_Authorization</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Authorization token is not filled</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">No value provided in the mandatory X-IDMS-Authorization header parameter.</font></td>\n\t</tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Empty_BusinessUnit</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Business Unit is not Filled</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">No value provided in the mandatory businessUnit path parameter.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_BusinessUnit</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Business Unit code does not exist in MySE</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">The requested Business Unit value does not exist in MySE.</font></td>\n\t</tr>\n\t<tr>\n    <td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_Language</font></td>\n    <td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid language</font></td>\n    <td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Language does not exist for the given Business unit</font></td>\n  </tr>\n</table>\n\n### #2. Technical error code for http return code 403\n\nInvalid authentication token or user not registered in mySE\n\n<table cellspacing=\"0\" border=\"0\">\n\t<colgroup width=\"158\"></colgroup>\n\t<colgroup width=\"250\"></colgroup>\n\t<colgroup width=\"520\"></colgroup>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorCode</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorMessage</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">Comment</font></b></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_Authorization</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid authorization token</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Wrong token or invalid session on IDMS.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Expired_Authorization</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Expired authorization token</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">The authorization token validity has expired, it must be renewed by the calling application</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Invalid_User</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">User with federateID XXX not found for Business unit YYY</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">User not recognized on MySE for the given Business Unit. FederatedID is the unique identifier for the user in MySE database (UIMS and IDMS identifier)</font></td>\n\t</tr>\n</table>\n\n### #3. Technical error code for http return code 500\n\nService unavailable or Unexpected error\n\n<table cellspacing=\"0\" border=\"0\">\n\t<colgroup width=\"158\"></colgroup>\n\t<colgroup width=\"250\"></colgroup>\n\t<colgroup width=\"520\"></colgroup>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorCode</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">errorMessage</font></b></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"center\" bgcolor=\"#EAD1DC\"><b><font face=\"Arial\" color=\"#000000\">comment</font></b></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Service_Unavailable</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Unable to connect to MySE</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Connection to MySE rejected or timeout.</font></td>\n\t</tr>\n\t<tr>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">NOK</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">An error has occured at &lt;date&gt;</font></td>\n\t\t<td style=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000\" align=\"left\" bgcolor=\"#FFFFFF\"><font face=\"Arial\">Any other error or exception found. All technical errors are managed within this specific code.</font></td>\n\t</tr>\n</table>\n",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Utility Service"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-IDMS-Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "description": "Authorization token for user identification in IDMS.\n\nExample:\nFor an IDMS OAuth token\n* X-IDMS-Authorization: 00D11000000Doh7!AR8AQI6cigc8axgaooyUti5MxTW4jOR_f5yO8ihmUo8RcM6aIwibBPv6yZ5trZBSXHPQq3nesns5l6.splDzUWttm8wteHpP",
+                        "required": true
+                    }
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "business-unit",
+                    "in": "path",
+                    "type": "string",
+                    "required": true,
+                    "description": "MySE Business Unit: MySE identifier on which the request has to be done.\n\nCould be the actual MySE business unit name or the corresponding ACL name (e.g. MySEUS / myseMySEUS).\n\nExamples\n* MySEFR2\n* myseMySEGB\n* ITB"
+                },
+                {
+                    "name": "X-IDMS-Authorization",
+                    "in": "header",
+                    "type": "string",
+                    "description": "Authorization token for user identification in IDMS.\n\nExample:\nFor an IDMS OAuth token\n* X-IDMS-Authorization: 00D11000000Doh7!AR8AQI6cigc8axgaooyUti5MxTW4jOR_f5yO8ihmUo8RcM6aIwibBPv6yZ5trZBSXHPQq3nesns5l6.splDzUWttm8wteHpP",
+                    "required": true
+                }
+            ]
+        }
+    },
+    "definitions": {
+        "PaymentTermsItem": {
+            "type": "object",
+            "description": "PaymentTermsItem information",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "Value of the status (its code).",
+                    "example": "Z001"
+                },
+                "label": {
+                    "type": "string",
+                    "description": "Label  of the payment term (translated token)",
+                    "example": "Importation - Cash"
+                }
+            },
+            "required": [
+                "code",
+                "label"
+            ]
+        },
+        "PaymentTerms": {
+            "type": "object",
+            "xml": {
+                "name": "PaymentTermsListData"
+            },
+            "description": "The list that contains all possible payment terms for a businessUnit\n",
+            "properties": {
+                "paymentTermsList": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "PaymentTermsItem information",
+                        "properties": {
+                            "code": {
+                                "type": "string",
+                                "description": "Value of the status (its code).",
+                                "example": "Z001"
+                            },
+                            "label": {
+                                "type": "string",
+                                "description": "Label  of the payment term (translated token)",
+                                "example": "Importation - Cash"
+                            }
+                        },
+                        "required": [
+                            "code",
+                            "label"
+                        ]
+                    }
+                }
+            }
+        },
+        "CustomerId": {
+            "type": "object",
+            "description": "Customer ID & name",
+            "properties": {
+                "customerId": {
+                    "type": "string",
+                    "description": "Identifier of the customer"
+                },
+                "customerName": {
+                    "type": "string",
+                    "description": "Name of the customer"
+                }
+            },
+            "required": [
+                "customerId",
+                "customerName"
+            ]
+        },
+        "CustomerIds": {
+            "type": "object",
+            "description": "The list of customer IDs & customer names for a single purchaser",
+            "properties": {
+                "purchaserId": {
+                    "type": "string",
+                    "description": "Identifier of the purchaser account"
+                },
+                "customerIdList": {
+                    "type": "array",
+                    "description": "The list of customer IDs & customer names for a single purchaser",
+                    "items": {
+                        "type": "object",
+                        "description": "Customer ID & name",
+                        "properties": {
+                            "customerId": {
+                                "type": "string",
+                                "description": "Identifier of the customer"
+                            },
+                            "customerName": {
+                                "type": "string",
+                                "description": "Name of the customer"
+                            }
+                        },
+                        "required": [
+                            "customerId",
+                            "customerName"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "purchaserId"
+            ]
+        },
+        "CustomerIdsForAllPurchasers": {
+            "type": "object",
+            "properties": {
+                "customerIdByPurchaserList": {
+                    "type": "array",
+                    "description": "The list of customer IDs & customer names for all purchasers",
+                    "items": {
+                        "type": "object",
+                        "description": "The list of customer IDs & customer names for a single purchaser",
+                        "properties": {
+                            "purchaserId": {
+                                "type": "string",
+                                "description": "Identifier of the purchaser account"
+                            },
+                            "customerIdList": {
+                                "type": "array",
+                                "description": "The list of customer IDs & customer names for a single purchaser",
+                                "items": {
+                                    "type": "object",
+                                    "description": "Customer ID & name",
+                                    "properties": {
+                                        "customerId": {
+                                            "type": "string",
+                                            "description": "Identifier of the customer"
+                                        },
+                                        "customerName": {
+                                            "type": "string",
+                                            "description": "Name of the customer"
+                                        }
+                                    },
+                                    "required": [
+                                        "customerId",
+                                        "customerName"
+                                    ]
+                                }
+                            }
+                        },
+                        "required": [
+                            "purchaserId"
+                        ]
+                    }
+                }
+            },
+            "description": "The list of customer IDs & customer names for all purchasers"
+        }
+    },
+    "schemes": [
+        "https"
+    ],
+    "parameters": {
+        "languageCode": {
+            "name": "languageCode",
+            "in": "query",
+            "type": "string",
+            "description": "Language code to use for translation of user information item labels returned by the API. This is a 2-digits ISO code.\nIf not set, the service will use the default language\nconfigured for each mySE site.\nExample: \n* languageCode=fr"
+        },
+        "countryCode": {
+            "name": "countryCode",
+            "in": "query",
+            "type": "string",
+            "description": "Country code to use for translation of user information item labels returned by the API, in addition to the language code. This is a 2-digits ISO code.\nIf not set, the API will use the default country code for the requested language code.\nIf neither the language code nor the country code are set, the API will use the default language configured for each mySE site.\nExample: \n* countryCode=FR"
+        },
+        "UserAuthorization": {
+            "name": "X-IDMS-Authorization",
+            "in": "header",
+            "type": "string",
+            "description": "Authorization token for user identification in IDMS.\n\nExample:\nFor an IDMS OAuth token\n* X-IDMS-Authorization: 00D11000000Doh7!AR8AQI6cigc8axgaooyUti5MxTW4jOR_f5yO8ihmUo8RcM6aIwibBPv6yZ5trZBSXHPQq3nesns5l6.splDzUWttm8wteHpP",
+            "required": true
+        },
+        "businessUnit": {
+            "name": "business-unit",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "MySE Business Unit: MySE identifier on which the request has to be done.\n\nCould be the actual MySE business unit name or the corresponding ACL name (e.g. MySEUS / myseMySEUS).\n\nExamples\n* MySEFR2\n* myseMySEGB\n* ITB"
+        }
+    },
+    "responses": {},
+    "securityDefinitions": {
+        "oauth2": {
+            "type": "oauth2",
+            "flow": "application",
+            "tokenUrl": "https://api.qa.se.com",
+            "description": "For system to system uses cases where the API service does not need a user context to execute, please use the provided APIM developer credentials to request a token, then submit the token via the Authorization Bearer header when calling an API operation.\n\nAfter one hour, a fresh APIM token needs to be requested."
+        }
+    },
+    "host": "api.qa.se.com",
+    "security": [
+        {
+            "apikey": []
+        },
+        {
+            "oauth2": []
+        }
+    ]
+}

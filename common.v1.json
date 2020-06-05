@@ -1,0 +1,345 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.1",
+        "title": "Common Resources",
+        "description": "Commonly used resources. You are encouraged to $ref these from your API, using this URL.\n\n**https://next-api.stoplight.io/files.export?projectId=21873&branch=version%2F1.1&path=common.oas2.yml**\n\nPrior v1.0 is here.\n\n**https://next-api.stoplight.io/files.export?projectId=21873&branch=version%2F1.0&path=common.oas2.yml**\n\n### Edit History\n*7-Aug-19*\n\nAdded resources: Page Links, Address\n\nAdded field: amountType to Currency resource\n\nAdded more documentation for Error Response code field",
+        "contact": {
+            "name": "APIfirst@se.com",
+            "url": "https://se.com",
+            "email": "APIFirst@se.com"
+        },
+        "license": {
+            "name": ""
+        }
+    },
+    "host": "api.sandbox.se.com",
+    "securityDefinitions": {
+        "oauth2": {
+            "type": "oauth2",
+            "flow": "application",
+            "tokenUrl": "https://api.sandbox.se.com/token",
+            "description": "Client Credentials flow is typically used for authentication between trusted systems."
+        }
+    },
+    "paths": {
+        "/common-errors": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Each API should define its own 200 response."
+                    },
+                    "201": {
+                        "description": "Each API should define its own 201 response after a successful POST request."
+                    },
+                    "202": {
+                        "$ref": "#/responses/202 - Accepted"
+                    },
+                    "204": {
+                        "$ref": "#/responses/204 - No Content"
+                    },
+                    "304": {
+                        "$ref": "#/responses/304 - Not Modified"
+                    },
+                    "400": {
+                        "$ref": "#/responses/400 - Bad Request"
+                    },
+                    "401": {
+                        "$ref": "#/responses/401 - Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/responses/403 - Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/responses/404 - Not Found"
+                    },
+                    "410": {
+                        "$ref": "#/responses/410 - Gone"
+                    },
+                    "412": {
+                        "$ref": "#/responses/412 - Precondition Failed"
+                    },
+                    "429": {
+                        "$ref": "#/responses/429 - Too Many Requests"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500 - Internal Server Error"
+                    },
+                    "501": {
+                        "$ref": "#/responses/501 - Not Implemented"
+                    }
+                },
+                "summary": "Dummy operation with all status codes",
+                "description": "Dummy operation created to show common error responses in the published specification.\n\nNew APIs should try to limit errors to these ones.",
+                "operationId": "dummy-post",
+                "tags": [
+                    "All Codes"
+                ],
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ],
+                "consumes": [],
+                "produces": []
+            }
+        }
+    },
+    "responses": {
+        "202 - Accepted": {
+            "description": "Request has been accepted for asynchronous processing."
+        },
+        "204 - No Content": {
+            "description": "Request to DELETE a resource has been successful."
+        },
+        "304 - Not Modified": {
+            "description": "Requested resource has not been modified with respect to the conditional header properties If-None-Match or If-Modified-Since.\n\nThe client may continue to use a cached copy."
+        },
+        "400 - Bad Request": {
+            "description": "Request is invalid and cannot be processed due one or more issues such as syntax errors, missing required fields, out of range values, conflicting query parameters, or unknown URI.",
+            "schema": {
+                "$ref": "#/definitions/errorResponse"
+            }
+        },
+        "401 - Unauthorized": {
+            "description": "The client is not authorized to perform this request because its identity has not yet been established, or the token is invalid or has expired.",
+            "schema": {
+                "$ref": "#/definitions/errorResponse"
+            }
+        },
+        "403 - Forbidden": {
+            "description": "The client does not have permission to perform the requested action e.g. POST or DELETE.",
+            "schema": {
+                "$ref": "#/definitions/errorResponse"
+            }
+        },
+        "404 - Not Found": {
+            "description": "Requested resource does not exist on the server. It is assumed that the URI is valid for this type of resource.",
+            "schema": {
+                "$ref": "#/definitions/errorResponse"
+            }
+        },
+        "410 - Gone": {
+            "description": "The API target is no longer available.",
+            "schema": {
+                "$ref": "#/definitions/errorResponse"
+            }
+        },
+        "412 - Precondition Failed": {
+            "description": "Requested operation failed when precondition specified in If-Match or If-Unmodified-Since header property resolved to false on the server.",
+            "schema": {
+                "$ref": "#/definitions/errorResponse"
+            }
+        },
+        "429 - Too Many Requests": {
+            "description": "Number of requests has exceeded the client's rate limits.",
+            "schema": {
+                "$ref": "#/definitions/errorResponse"
+            }
+        },
+        "500 - Internal Server Error": {
+            "description": "Requested operation encountered an unexpected server error.",
+            "schema": {
+                "$ref": "#/definitions/errorResponse"
+            }
+        },
+        "501 - Not Implemented": {
+            "description": "Requested operation is not implemented by the server.",
+            "schema": {
+                "$ref": "#/definitions/errorResponse"
+            }
+        }
+    },
+    "definitions": {
+        "errorResponse": {
+            "type": "object",
+            "title": "Error Response",
+            "description": "Error response returned to the consumer when an HTTP error status has occurred.",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "MISSING_FIELD or 12345",
+                    "description": "Service-defined error code which may be numeric or a string.\n\nErrors detected by the APIM platform result in the following codes.\n\nBAD_REQUEST (for 400)\nUNAUTHORIZED (for 401)\nFORBIDDEN (for 403)\nNOT_FOUND (for 404)\nGONE (for 410)\nPRECONDITION_FAILED (for 412)\nTOO_MANY_REQUESTS (for 429)\nINTERNAL_SERVER_ERROR (for 500)\nNOT_IMPLEMENTED (for 501)\n\nAny specific service validation errors would replace BAD_REQUEST."
+                },
+                "userMessage": {
+                    "type": "string",
+                    "example": "Required field is missing: productSku",
+                    "description": "Human-readable description of the error with hints about how to fix it."
+                },
+                "developerMessage": {
+                    "type": "string",
+                    "description": "Optional human-readable description of the error, meaningful to a developer.",
+                    "example": "Product master API ParseException: required tag <sku> expected"
+                },
+                "moreInfo": {
+                    "type": "string",
+                    "description": "Optional link to error documentation, which has more information about the error.",
+                    "format": "uri",
+                    "example": "https://example.com/product-master/v1/error/12345"
+                }
+            },
+            "required": [
+                "code",
+                "userMessage"
+            ]
+        },
+        "currency": {
+            "type": "object",
+            "title": "Currency",
+            "description": "Resource representing a currency amount.",
+            "properties": {
+                "currency": {
+                    "type": "string",
+                    "description": "Three character currency code, as defined by ISO 4217.",
+                    "pattern": "^[a-zA-Z]{2}$"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Currency amount as a decimal value.",
+                    "pattern": "^\\d*(.\\d+)?$"
+                },
+                "display": {
+                    "type": "string",
+                    "description": "Optional currency amount suitable for display, including the currency symbol.",
+                    "example": "$45.21"
+                },
+                "amountType": {
+                    "type": "string",
+                    "description": "Optional type describing the nature of the amount.",
+                    "example": "Manufacturing Cost"
+                }
+            },
+            "required": [
+                "currency",
+                "value"
+            ]
+        },
+        "link": {
+            "type": "object",
+            "title": "Link",
+            "description": "Link to related resource endpoint.",
+            "properties": {
+                "rel": {
+                    "type": "string",
+                    "description": "A word describing the relationship\n\nStandardized relationship names are defined here but names are not limited to this list.\n\nhttps://www.iana.org/assignments/link-relations/link-relations.xhtml",
+                    "default": "related",
+                    "example": "self, related, help, chapter, first, last, parent"
+                },
+                "href": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URI for a resource endpoint.",
+                    "example": "https://example.com/book/v1/chapter2"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Optional human-readable title for the link.",
+                    "example": "Next Chapter"
+                }
+            },
+            "required": [
+                "rel",
+                "href"
+            ]
+        },
+        "page-links": {
+            "type": "object",
+            "title": "Page Links",
+            "description": "A set of links to resource endpoints, commonly used for pagination.\n\nAt least one relationship must be present.",
+            "properties": {
+                "next": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "endpoint URI to retrieve the next resources in a result set.",
+                    "example": "https://api.se.com/service/v1/assets?page=x"
+                },
+                "prev": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "endpoint URI to retrieve the previous resources in a result set."
+                },
+                "first": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "endpoint URI to retrieve the first resources in a result set."
+                },
+                "last": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "endpoint URI to retrieve the last resources in a result set."
+                },
+                "self": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "endpoint URI to retrieve the current resource or resources in a result set."
+                }
+            }
+        },
+        "Address": {
+            "type": "object",
+            "title": "Address",
+            "description": "Resource representing a phyiscal or postal address.",
+            "properties": {
+                "businessName": {
+                    "type": "string",
+                    "description": "Optional business name."
+                },
+                "street": {
+                    "type": "string",
+                    "description": "Street name or PO box with optional extra address lines separated by end of line characters."
+                },
+                "additionalLine": {
+                    "type": "string",
+                    "description": "Optional address line to describe a suite, unit, floor number or named district within a city."
+                },
+                "city": {
+                    "type": "string",
+                    "description": "Optional city or town name."
+                },
+                "state": {
+                    "type": "string",
+                    "description": "Optional state, province or region code.\n\nAn unrecognised code may result in a validation error or be handled as the full name."
+                },
+                "zipcode": {
+                    "type": "string",
+                    "description": "Optional zip code or postal code. Required in some countries."
+                },
+                "country": {
+                    "type": "string",
+                    "description": "Two character country code, as defined by ISO 3166-2."
+                },
+                "language": {
+                    "type": "string",
+                    "description": "Language code, as defined by ISO 639-1.\n\nAn unrecognized code may result in a validation error or default to \"en\" (English).",
+                    "default": "en"
+                }
+            },
+            "required": [
+                "street",
+                "country",
+                "language"
+            ]
+        }
+    },
+    "basePath": "/v1",
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "tags": [
+        {
+            "name": "Error Responses"
+        },
+        {
+            "name": "Operations"
+        },
+        {
+            "name": "All Codes"
+        }
+    ],
+    "security": [
+        {
+            "oauth2": []
+        }
+    ]
+}

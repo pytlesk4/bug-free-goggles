@@ -1,0 +1,10 @@
+title: Email
+type: object
+x-tags:
+  - Email
+description: An email object
+properties:
+  category:
+    type: string
+  address:
+    type: string

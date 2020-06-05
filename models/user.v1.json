@@ -1,0 +1,30 @@
+{
+  "title": "Users",
+  "type": "object",
+  "x-tags": [
+    "Models"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The user's full name."
+    },
+    "age": {
+      "type": "number",
+      "format": "double",
+      "minimum": 0,
+      "maximum": 150
+    },
+    "givenname": {
+      "type": "string"
+    },
+    "surname": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "age"
+  ],
+  "description": "user  whatevefr"
+}

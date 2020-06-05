@@ -1,0 +1,48 @@
+title: User
+type: object
+description: 'A user!!'
+x-tags:
+  - Users
+x-examples: {}
+summary: 'A summary!'
+properties:
+  id:
+    type: integer
+    minimum: 0
+    description: The user ID
+  name:
+    type: string
+    description: The user display name
+  username:
+    type: string
+    minLength: 3
+    maxLength: 32
+    description: The account name
+  email:
+    type: string
+    format: email
+  password_hash:
+    type: string
+    description: "The bcrypt hash of the user's password"
+  salt:
+    type: string
+    description: The salt used to hash the password
+  created_at:
+    type: string
+    format: date-time
+    description: When the user was created
+  last_seen_at:
+    type: string
+    format: date-time
+    description: When the user last logged in
+  _meta:
+    $ref: 'http://localhost:8080/api/nodes.raw/?srn=bbs/adt-sl/data-model-dictionary/reference/common/models/SharedCommonDataModels/PNRModel/TicketingReference/TicketingReference.v1.yaml&mid=151&deref=bundle'
+required:
+  - id
+  - username
+  - email
+  - password_hash
+  - salt
+  - created_at
+  - last_seen_at
+  - _meta

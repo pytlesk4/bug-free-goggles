@@ -1,0 +1,7 @@
+title: eventB
+type: object
+properties:
+  id:
+    type: string
+x-tags:
+  - Events

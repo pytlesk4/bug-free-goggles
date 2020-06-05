@@ -1,0 +1,220 @@
+swagger: '2.0'
+info:
+  title: email-delivery
+  version: '1.0'
+  description: API Delivers email to end customer through Amadeus platform.
+  contact:
+    name: TDS
+host: api.amadeus.com
+schemes:
+  - http
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /email-deliveries:
+    post:
+      summary: Email Delivery
+      tags:
+        - RESTAPIEmailDeliveries
+      description: This endpoint is solely responsible for sending emails through Amadeus (Format And Deliver Application).
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/EmailDelivery'
+          description: ''
+      responses:
+        '202':
+          description: Request Successfully Accepted
+          schema:
+            $ref: '#/definitions/ResponseJsonPost'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: ../../common-models/error.v1.yaml
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: ../../common-models/error.v1.yaml
+      operationId: EmailDeliveries
+    parameters: []
+  '/email-deliveries/{email-delivery-id}':
+    parameters:
+      - type: string
+        name: email-delivery-id
+        in: path
+        description: FND Email Request ID
+        required: true
+    get:
+      summary: Delivery Status
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ResponseJsonGet'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: ../../common-models/error.v1.yaml
+        '404':
+          description: Not Found
+          schema:
+            $ref: ../../common-models/error.v1.yaml
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: ../../common-models/error.v1.yaml
+      description: This endpoint gets email delivery status
+      parameters: []
+      operationId: EmailStatus
+      tags:
+        - RESTAPIEmailDeliveries
+definitions:
+  EmailDeliveryBody:
+    title: EmailDeliveryBody
+    type: object
+    properties:
+      emailMessage:
+        $ref: 'https://api-stoplight-val.in.int-a.nce1.paas.amadeus.net/nodes.raw/bbs/adt-sl/data-model-dictionary/reference/common/models/SharedCommonDataModels/EmailMessage/EmailMessage.yaml?mid=452'
+      attachments:
+        type: array
+        items:
+          $ref: '#/definitions/Attachment'
+      engineFactoryCriterion:
+        $ref: '#/definitions/EngineFactoryCriterion'
+    required:
+      - emailMessage
+  Attachment:
+    title: Attachment
+    type: object
+    description: "Attachment can be URL of Document store in FND Object store. To Format and Store Document, API Consumer can use Document Formatting API. \nfor example : https://docs.test.amadeus.com/v1/object-stores/FND/documents/{document-id}\n"
+    properties:
+      filename:
+        $ref: 'https://api-stoplight-val.in.int-a.nce1.paas.amadeus.net/nodes.raw/bbs/adt-sl/data-model-dictionary/reference/common/models/SharedCommonDataModels/QualifiedFreeText/QualifiedFreeText.yaml?mid=270'
+      document_ref:
+        type: string
+        description: Attachment defined by a URL provided by format-document API. Mutually exclusive with base64Content tag.
+      base64Content:
+        $ref: 'https://api-stoplight-val.in.int-a.nce1.paas.amadeus.net/nodes.raw/bbs/adt-sl/data-model-dictionary/reference/common/models/SharedCommonDataModels/QualifiedFreeText/QualifiedFreeText.yaml?mid=328'
+      contentType:
+        type: string
+        enum:
+          - application/pdf
+          - application/postscript1
+          - application/postscript2
+          - application/postscript3
+          - application/xml-business-data
+          - text/plain
+          - text/json
+          - text/html
+          - text/xml
+          - text/rtf
+          - application/pdf-pbp
+          - application/pdf-pss
+          - application/zip
+          - application/vnd.apple.pkpass
+          - application/vnd.com.amadeus.aea
+          - image/png
+          - image/jpg
+          - image/jpeg
+          - image/gif
+        description: ''
+    required:
+      - filename
+  EngineFactoryCriterion:
+    title: EngineFactoryCriterion
+    type: object
+    description: 'Parameters related to Request '
+    properties:
+      billingCode:
+        type: string
+  EmailDelivery:
+    title: EmailDelivery
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/EmailDeliveryBody'
+  RecipientStatus:
+    allOf:
+      - $ref: 'https://api-stoplight-val.in.int-a.nce1.paas.amadeus.net/nodes.raw/bbs/adt-sl/data-model-dictionary/reference/common/models/SharedCommonDataModels/Email/Email.yaml?mid=458'
+      - type: object
+        properties:
+          status:
+            type: string
+            enum:
+              - ACCEPTED
+              - ONGOING
+              - SMTP_DELIVERED
+              - DELIVERY_FAILED
+            description: Status of email for a recipient
+        required:
+          - status
+  ResponseJsonGet:
+    title: ResponseJsonGet
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/SuccessResponseGet'
+  SuccessResponsePost:
+    title: SuccessResponsePost
+    type: object
+    properties:
+      id:
+        type: string
+      status:
+        type: string
+        enum:
+          - ACCEPTED
+          - ONGOING
+          - SMTP_DELIVERED
+          - DELIVERY_FAILED
+      toAddresses:
+        type: array
+        items:
+          $ref: 'https://api-stoplight-val.in.int-a.nce1.paas.amadeus.net/nodes.raw/bbs/adt-sl/data-model-dictionary/reference/common/models/SharedCommonDataModels/Email/Email.yaml'
+      ccAddresses:
+        type: array
+        items:
+          $ref: 'https://api-stoplight-val.in.int-a.nce1.paas.amadeus.net/nodes.raw/bbs/adt-sl/data-model-dictionary/reference/common/models/SharedCommonDataModels/Email/Email.yaml'
+      bccAddresses:
+        type: array
+        items:
+          $ref: 'https://api-stoplight-val.in.int-a.nce1.paas.amadeus.net/nodes.raw/bbs/adt-sl/data-model-dictionary/reference/common/models/SharedCommonDataModels/Email/Email.yaml'
+      description:
+        type: string
+    required:
+      - id
+      - status
+  ResponseJsonPost:
+    title: ResponseJsonPost
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/SuccessResponsePost'
+  SuccessResponseGet:
+    title: SuccessResponseGet
+    type: object
+    properties:
+      id:
+        type: string
+      toAddresses:
+        type: array
+        items:
+          $ref: '#/definitions/RecipientStatus'
+      ccAddresses:
+        type: array
+        items:
+          $ref: '#/definitions/RecipientStatus'
+      bccAddresses:
+        type: array
+        items:
+          $ref: '#/definitions/RecipientStatus'
+      description:
+        type: string
+        description: Status Description
+    required:
+      - id
+basePath: /v1/communication

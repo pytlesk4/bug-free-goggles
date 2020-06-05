@@ -1,0 +1,28 @@
+title: User Input
+type: object
+summary: 'A summary!'
+x-examples: {}
+x-tags:
+  - Users
+description: Used to create a user
+properties:
+  name:
+    type: string
+    description: The user display name
+  username:
+    type: string
+    minLength: 3
+    maxLength: 32
+    description: The account name
+  password:
+    type: string
+    description: "The bcrypt hash of the user's password"
+    minLength: 6
+  email:
+    type: string
+    format: email
+required:
+  - name
+  - username
+  - password
+  - email

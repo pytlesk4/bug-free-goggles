@@ -1,0 +1,27 @@
+title: Metadata
+type: object
+x-something: true
+description: Metadata (v2) for an object
+properties:
+  admin:
+    type: boolean
+    description: Whether the object has administrative priviliges
+  last_accessed_at:
+    type: string
+    format: date-time
+    description: When the object was last accessed
+  updated_at:
+    type: string
+    format: date-time
+    description: When the object was updated
+  created_at:
+    type: string
+    format: date-time
+    description: When the object was created
+  something:
+    type: object
+required:
+  - admin
+  - last_accessed_at
+  - updated_at
+  - created_at

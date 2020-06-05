@@ -1,0 +1,202 @@
+swagger: '2.0'
+info:
+  title: Asset Manager
+  version: '1.0'
+  contact:
+    name: Stoplight Support
+    email: support@stoplight.io
+    url: 'https://support.stoplight.io'
+  description: |-
+    Asset manager is an API overlay for managing assets as they travel through the deployment pipeline. That's about it. Yep.
+
+    > This is a test API...
+host: 'localhost:3000'
+schemes:
+  - https
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /assets:
+    get:
+      summary: Retrieve a list of assets
+      tags:
+        - Asset
+      responses:
+        '200':
+          description: An array of assets matching the incoming request...
+          schema:
+            type: array
+            items:
+              $ref: ../models/asset.v1.yaml
+          headers:
+            X-Request-ID:
+              type: string
+              description: Server-side ID for request tracking
+              required: true
+          examples:
+            example-1: {}
+        '201':
+          description: Created
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+      operationId: get-assets
+      description: |-
+        Retrieve a list of assets from the asset manager API
+
+        > Use this one!
+
+        Some test.
+
+        This is a change. See [here](../docs/home.md#some-anchor).
+      parameters:
+        - type: array
+          in: query
+          name: filter
+          description: Array of key=value pairs for filtering results
+          minLength: 0
+          maxLength: 0
+        - type: integer
+          in: query
+          name: offset
+          description: Number to offset returned results by
+        - type: integer
+          in: query
+          name: limit
+          description: Number of results that should be returned
+    post:
+      summary: Create a new asset
+      operationId: post-assets
+      responses:
+        '201':
+          description: Created
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties: {}
+      description: Create a new asset for management within a pipeline...
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: ../models/asset.v1.yaml
+      tags:
+        - Asset
+  '/assets/{assetID}':
+    parameters:
+      - type: string
+        name: assetID
+        in: path
+        required: true
+    get:
+      summary: Retrieve an asset
+      tags:
+        - Asset
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: ../models/asset.v1.yaml
+      operationId: get-assets-assetID
+      description: "Retrieve an asset by it's asset ID. Yep!"
+    patch:
+      summary: Update an asset
+      operationId: 1patch-assets-assetID
+      responses:
+        '204':
+          description: No Content
+      tags:
+        - Asset
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: ../models/asset.v1.yaml
+          x-examples:
+            example-1: {}
+          description: ''
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/Asset'
+          x-examples:
+            example-1: {}
+      security:
+        - API-Key: []
+      description: "Update an asset, it's that easy."
+    delete:
+      summary: Remove an asset
+      operationId: 'delete-assets-{assetID}'
+      responses:
+        '204':
+          description: No Content
+      tags:
+        - Asset
+      parameters: []
+      security:
+        - API-Key: []
+  /health:
+    get:
+      summary: A super long summary about the benefits of a health endpoint in an API
+      tags:
+        - Health
+      responses: {}
+      operationId: get-health
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/Health'
+              - type: object
+                properties:
+                  message:
+                    type: string
+definitions:
+  Health:
+    title: Health
+    type: object
+    properties:
+      healthy?:
+        type: boolean
+    required:
+      - healthy?
+    description: ''
+    x-tags:
+      - Health
+securityDefinitions:
+  API-Key:
+    name: API Key
+    type: apiKey
+    in: header
+    description: 'Asset manager API key, retrieved from account settings'
+responses:
+  '200 - Okay':
+    description: 'Testing'
+    schema:
+      title: Health
+      type: object
+      properties:
+        healthy?:
+          type: boolean
+      required:
+        - healthy?
+      description: ''
+      x-tags:
+        - Health
+basePath: /1
+security:
+  - API-Key: []

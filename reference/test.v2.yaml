@@ -1,0 +1,41 @@
+openapi: 3.0.0
+info:
+  title: asset-manager.v2
+  version: '2.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /health:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Health
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Extended-Health'
+      operationId: get-health
+      security: []
+components:
+  schemas:
+    Health:
+      title: Health
+      type: object
+      properties:
+        healthy?:
+          type: boolean
+      x-tags:
+        - Health
+    Extended-Health:
+      title: Extended-Health
+      x-tags:
+        - Health
+      allOf:
+        - $ref: '#/components/schemas/Health'
+        - type: object
+          properties:
+            message:
+              type: string

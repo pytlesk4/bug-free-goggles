@@ -1,0 +1,5 @@
+title: zd1437
+type: object
+properties:
+  PNR:
+    $ref: 'http://localhost:8080/api/nodes.raw/?srn=bbs/adt-sl/data-model-dictionary/reference/common/models/SharedCommonDataModels/PNRModel/PNRModel.v2.yaml&mid=444&deref=bundle'
