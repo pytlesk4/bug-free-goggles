@@ -15,8 +15,6 @@ properties:
     type: string
     format: date-time
     description: When the object was last accessed
-  admin:
-    $ref: 'http://localhost:8080/api/nodes.raw/?srn=bbs/adt-sl/data-model-dictionary/reference/common/models/SharedCommonDataModels/Address/Address.v1.yaml&deref=bundle'
 required:
   - created_at
   - updated_at

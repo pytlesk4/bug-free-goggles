@@ -103,8 +103,6 @@ paths:
         required: true
     get:
       summary: Retrieve an asset
-      tags:
-        - Asset
       responses:
         '200':
           description: OK
@@ -118,8 +116,6 @@ paths:
       responses:
         '204':
           description: No Content
-      tags:
-        - Asset
       parameters:
         - in: body
           name: body
@@ -177,6 +173,8 @@ definitions:
     description: ''
     x-tags:
       - Health
+  Asset:
+    type: string
 securityDefinitions:
   API-Key:
     name: API Key
